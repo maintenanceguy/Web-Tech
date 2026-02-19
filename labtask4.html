@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lab Task 04 - HTML Form</title>
+</head>
+
+<body>
+
+<header>
+    <h1>AIUB Student Form</h1>
+</header>
+
+<main>
+
+<form action="#" method="post">
+
+<fieldset>
+    <legend>Student Information</legend>
+
+    <label for="name">Full Name:</label>
+    <input type="text" id="name" name="name"><br><br>
+
+    <label for="email">Email Address:</label>
+    <input type="email" id="email" name="email"><br><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password"><br><br>
+
+    <label for="dob">Date of Birth:</label>
+    <input type="date" id="dob" name="dob"><br><br>
+
+    Gender:
+    <input type="radio" id="male" name="gender">
+    <label for="male">Male</label>
+
+    <input type="radio" id="female" name="gender">
+    <label for="female">Female</label>
+
+</fieldset>
+
+<br>
+
+<fieldset>
+    <legend>Academic Information</legend>
+
+    <label for="dept">Department:</label>
+    <select id="dept" name="dept">
+        <option>CNCS</option>
+        <option>EEE</option>
+        <option>Architecture</option>
+        <option>CSE</option>
+    </select>
+
+    <br><br>
+    
+    <legend>Skills:</legend>
+
+    <input type="checkbox" id="html" name="skill">
+    <label for="html">HTML</label>
+
+    <input type="checkbox" id="java" name="skill">
+    <label for="java">Java</label>
+
+    <input type="checkbox" id="python" name="skill">
+    <label for="python">Python</label>
+
+</fieldset>
+
+<br>
+
+<input type="submit" value="Submit">
+<input type="reset" value="Reset">
+
+</form>
+
+</main>
+
+<footer>
+    <p>© AIUB Web Technologies Lab</p>
+</footer>
+
+</body>
+</html>
