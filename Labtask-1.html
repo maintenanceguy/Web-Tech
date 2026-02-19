@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Donation Form</title>
+</head>
+<body>
+    <h2>Donation Form</h2>
+    <form>  
+        <label for="name">Full Name</label><br>
+        <input type="text" id="name" name="name" required> <br><br>
+
+        <label for="email">Email</label><br>
+        <input type="email" id="email" name="email" required> <br><br>
+
+        <label for="amount">Donation Amount</label><br>
+        <input type="number" id="amount" name="amount" required> <br><br>
+
+        <label for="method">Payment Method</label><br>
+        <select id="method" name="method" required>
+            <option value="">-- Select --</option>
+            <option value="Credit Card">Credit Card</option>
+            <option value="Debit Card">Debit Card</option>
+            <option value="UPI">UPI</option>
+            <option value="PayPal">PayPal</option>
+        </select><br><br>
+
+        <button type="submit">Submit</button>
+        <button type="reset">Reset</button>
+    </form>
+    
+</body>
+</html>
