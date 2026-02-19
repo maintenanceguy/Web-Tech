@@ -1,2 +1,3 @@
-# Web-Tech
-this is all web tech
+A creative mind exploring the web as both canvas and code. I see web technologies as a space where structure meets art  where simple lines of HTML grow into interactive experiences. As a researcher at heart I enjoy experimenting learning and building projects that blend logic with imagination from web creations to small game worlds. Always evolving, always creating  shaping ideas into digital stories one line of code at a time.
+
+Let's see where this takes us
