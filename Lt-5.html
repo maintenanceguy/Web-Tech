@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AIUB Academic Profile</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Personal Academic Profile - AIUB Web Technologies Lab">
+    <meta name="keywords" content="AIUB, HTML5, Academic Profile, Student">
+    <meta name="author" content="Your Name">
+</head>
+
+<body>
+
+<header>
+    <h1>American International University Bangladesh</h1>
+    <h2>Student Academic Profile</h2>
+</header>
+
+<nav>
+    <a href="#bio">Biography</a> |
+    <a href="#edu">Education</a> |
+    <a href="#contact">Contact</a>
+</nav>
+
+<main>
+
+    <section id="bio">
+        <h2>Biography</h2>
+        <p>
+            I am a student of AIUB studying Computer Network & Cybersecurity.
+            This webpage is created using semantic HTML5 for Web Technologies Lab.
+        </p>
+    </section>
+
+    <section id="edu">
+        <h2>Education</h2>
+
+        <table border="1">
+            <caption>Education History</caption>
+
+            <thead>
+                <tr>
+                    <th scope="col">Degree</th>
+                    <th scope="col">Institution</th>
+                    <th scope="col">Year</th>
+                    <th scope="col">Result</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>SSC</td>
+                    <td>School</td>
+                    <td>2019</td>
+                    <td>5.00</td>
+                </tr>
+
+                <tr>
+                    <td>HSC</td>
+                    <td>College</td>
+                    <td>2021</td>
+                    <td>4.80</td>
+                </tr>
+
+                <tr>
+                    <td>BSc in CNCS</td>
+                    <td>AIUB</td>
+                    <td>2026</td>
+                    <td>3.98</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Form</h2>
+
+        <form action="#" method="post">
+
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name"
+                   required
+                   placeholder="Enter your full name"><br><br>
+
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email"
+                   required
+                   placeholder="Enter your email"><br><br>
+
+            <label for="phone">Phone:</label><br>
+            <input type="text" id="phone" name="phone"
+                   pattern="[0-9]{11}"
+                   placeholder="01XXXXXXXXX"><br><br>
+
+            <label for="msg">Message:</label><br>
+            <textarea id="msg" name="msg"
+                      required
+                      maxlength="200"
+                      placeholder="Write your message"></textarea><br><br>
+
+            <input type="submit" value="Send">
+            <input type="reset" value="Reset">
+
+        </form>
+    </section>
+
+</main>
+
+<footer>
+    <p>© AIUB | Web Technologies Lab</p>
+</footer>
+
+</body>
+</html>
