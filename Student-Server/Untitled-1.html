@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<title>Student Manager</title>
+
+<link rel="stylesheet" href="dom.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Student Manager</h1>
+
+<form id="student-form">
+
+<input type="text" id="roll-no" placeholder="Roll No">
+
+<input type="text" id="student-name" placeholder="Student Name">
+
+<button type="submit" id="add-btn" disabled>Add Student</button>
+
+</form>
+
+
+<input type="text" id="search-box" placeholder="Search student...">
+
+
+<div class="buttons">
+
+<button id="sort-btn">Sort A–Z</button>
+
+<button id="highlight-first">Highlight First Student</button>
+
+</div>
+
+
+<ul id="student-list"></ul>
+
+
+<p id="total-count">Total students: 0</p>
+
+<p id="attendance-count">Present: 0 | Absent: 0</p>
+
+</div>
+
+<script src="dom.js"></script>
+
+</body>
+</html>
