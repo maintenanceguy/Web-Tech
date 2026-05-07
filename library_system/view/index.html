@@ -1,541 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>University Library Management System</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-  <style>
-    :root {
-      --bg:        #0f1117;
-      --surface:   #181c27;
-      --surface2:  #1f2436;
-      --border:    #2a3050;
-      --accent:    #e8b86d;
-      --accent2:   #5b8dee;
-      --danger:    #e05c6b;
-      --success:   #4ecb8d;
-      --text:      #dde3f0;
-      --text-muted:#7a85a3;
-      --radius:    10px;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-    }
-
-    header {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 18px 40px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    header .logo-icon {
-      width: 40px; height: 40px;
-      background: var(--accent);
-      border-radius: 8px;
-      display: grid; place-items: center;
-      font-size: 20px;
-    }
-    header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      color: var(--text);
-    }
-    header h1 span { color: var(--accent); }
-    header .subtitle {
-      margin-left: auto;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    .container { max-width: 1200px; margin: 0 auto; padding: 36px 24px; }
-
-    #toast {
-      position: fixed; top: 20px; right: 20px; z-index: 9999;
-      padding: 14px 22px;
-      border-radius: var(--radius);
-      font-size: 0.9rem; font-weight: 500;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      transform: translateY(-10px);
-      max-width: 320px;
-    }
-    #toast.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
-    #toast.success { background: var(--success); color: #fff; }
-    #toast.error   { background: var(--danger);  color: #fff; }
-
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px 32px;
-      margin-bottom: 32px;
-    }
-    .card-header {
-      display: flex; align-items: center; gap: 10px;
-      margin-bottom: 24px;
-    }
-    .card-header h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
-    }
-    .card-header .badge {
-      background: var(--surface2);
-      color: var(--accent);
-      font-size: 0.72rem;
-      padding: 3px 10px;
-      border-radius: 20px;
-      letter-spacing: 0.5px;
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-    @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } }
-    .form-group { display: flex; flex-direction: column; gap: 6px; }
-    .form-group.full { grid-column: 1 / -1; }
-    label {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-    }
-    input, select {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 7px;
-      color: var(--text);
-      padding: 11px 14px;
-      font-size: 0.9rem;
-      font-family: 'DM Sans', sans-serif;
-      transition: border-color 0.2s;
-      outline: none;
-    }
-    input:focus, select:focus { border-color: var(--accent2); }
-    select option { background: var(--surface2); }
-
-    .btn {
-      padding: 11px 22px;
-      border-radius: 7px;
-      font-size: 0.88rem;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      font-family: 'DM Sans', sans-serif;
-      transition: opacity 0.15s, transform 0.1s;
-      display: inline-flex; align-items: center; gap: 7px;
-    }
-    .btn:hover { opacity: 0.88; }
-    .btn:active { transform: scale(0.97); }
-    .btn-primary { background: var(--accent2); color: #fff; }
-    .btn-success { background: var(--success);  color: #fff; }
-    .btn-warning { background: var(--accent);   color: #111; }
-    .btn-danger  { background: var(--danger);   color: #fff; font-size: 0.8rem; padding: 7px 14px; }
-    .btn-sm      { padding: 7px 14px; font-size: 0.8rem; }
-    .btn-cancel  { background: var(--surface2); color: var(--text-muted); border: 1px solid var(--border); }
-
-    .form-actions {
-      display: flex; gap: 12px;
-      margin-top: 20px; align-items: center;
-    }
-
-    .table-wrapper { overflow-x: auto; }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.88rem;
-    }
-    thead tr {
-      background: var(--surface2);
-      text-transform: uppercase;
-      font-size: 0.75rem;
-      letter-spacing: 0.7px;
-      color: var(--text-muted);
-    }
-    th, td {
-      padding: 13px 16px;
-      text-align: left;
-      border-bottom: 1px solid var(--border);
-    }
-    tbody tr { transition: background 0.15s; }
-    tbody tr:hover { background: var(--surface2); }
-
-    .status {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 0.76rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .status.available { background: rgba(78,203,141,0.15); color: var(--success); }
-    .status.borrowed  { background: rgba(224,92,107,0.15); color: var(--danger); }
-
-    .stats {
-      display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap;
-    }
-    .stat-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px 24px;
-      flex: 1; min-width: 140px;
-    }
-    .stat-box .val {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      color: var(--accent);
-      line-height: 1;
-    }
-    .stat-box .lbl { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
-
-    .spinner {
-      display: inline-block;
-      width: 16px; height: 16px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-top-color: #fff;
-      border-radius: 50%;
-      animation: spin 0.6s linear infinite;
-      vertical-align: middle;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    .empty-state {
-      text-align: center;
-      padding: 48px 0;
-      color: var(--text-muted);
-    }
-    .empty-state .icon { font-size: 2.5rem; margin-bottom: 10px; }
-
-    .card.edit-mode { border-color: var(--accent); }
-    #editIndicator {
-      display: none;
-      background: rgba(232,184,109,0.12);
-      color: var(--accent);
-      border: 1px solid rgba(232,184,109,0.3);
-      border-radius: 7px;
-      padding: 10px 16px;
-      font-size: 0.85rem;
-      margin-bottom: 16px;
-    }
-    #editIndicator.show { display: block; }
-  </style>
+    <title>Library Management System</title>
 </head>
+
 <body>
 
-<header>
-  <div class="logo-icon">📚</div>
-  <h1>Uni<span>Library</span></h1>
-  <span class="subtitle">Book Management System</span>
-</header>
+<h1>Library Management System</h1>
 
-<div class="container">
+<input type="text" id="title" placeholder="Book Title"><br><br>
 
-  <div class="stats">
-    <div class="stat-box"><div class="val" id="statTotal">0</div><div class="lbl">Total Books</div></div>
-    <div class="stat-box"><div class="val" id="statAvailable">0</div><div class="lbl">Available</div></div>
-    <div class="stat-box"><div class="val" id="statBorrowed">0</div><div class="lbl">Borrowed</div></div>
-  </div>
+<input type="text" id="author" placeholder="Author Name"><br><br>
 
-  <div class="card" id="formCard">
-    <div class="card-header">
-      <h2 id="formTitle">Add New Book</h2>
-      <span class="badge" id="formBadge">Add</span>
-    </div>
+<input type="text" id="category" placeholder="Category"><br><br>
 
-    <div id="editIndicator">✏️ You are editing a book record. Fill in the updated details and click <strong>Update Book</strong>.</div>
+<select id="status">
+    <option>Available</option>
+    <option>Borrowed</option>
+</select><br><br>
 
-    <input type="hidden" id="bookId"/>
+<button onclick="addBook()">Add Book</button>
 
-    <div class="form-grid">
-      <div class="form-group">
-        <label for="title">Book Title</label>
-        <input type="text" id="title" placeholder="e.g. Introduction to Algorithms"/>
-      </div>
-      <div class="form-group">
-        <label for="author">Author Name</label>
-        <input type="text" id="author" placeholder="e.g. Thomas H. Cormen"/>
-      </div>
-      <div class="form-group">
-        <label for="category">Category</label>
-        <input type="text" id="category" placeholder="e.g. Computer Science"/>
-      </div>
-      <div class="form-group">
-        <label for="availability">Availability Status</label>
-        <select id="availability">
-          <option value="available">✅ Available</option>
-          <option value="borrowed">🔴 Borrowed</option>
-        </select>
-      </div>
-    </div>
+<br><br>
 
-    <div class="form-actions">
-      <button class="btn btn-success" id="submitBtn" onclick="submitForm()">
-        ➕ Add Book
-      </button>
-      <button class="btn btn-cancel" id="cancelBtn" onclick="resetForm()" style="display:none;">
-        Cancel Edit
-      </button>
-      <span id="formSpinner" style="display:none;"><span class="spinner"></span> Saving...</span>
-    </div>
-  </div>
+<table border="1" cellpadding="10" id="bookTable">
 
-  <div class="card">
-    <div class="card-header">
-      <h2>All Books</h2>
-      <span class="badge" id="bookCount">Loading...</span>
-    </div>
-    <div class="table-wrapper">
-      <table id="bookTable">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Category</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="bookTableBody">
-          <tr>
-            <td colspan="6" style="text-align:center; padding:32px; color:var(--text-muted);">
-              <span class="spinner"></span> Loading books...
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Category</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
 
-<div id="toast"></div>
+</table>
 
 <script>
-const HANDLER = 'ajax_handler.php'; // Path to your AJAX handler
 
-function showToast(message, type = 'success') {
-  const toast = document.getElementById('toast');
-  toast.textContent = message;
-  toast.className   = `show ${type}`;
-  setTimeout(() => { toast.className = ''; }, 3500);
-}
-function loadBooks() {
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', `${HANDLER}?action=get_books`, true);
+function addBook() {
 
-  xhr.onload = function() {
-    if (xhr.status === 200) {
-      const res = JSON.parse(xhr.responseText);
-      if (res.success) {
-        renderTable(res.data);
-        updateStats(res.data);
-      } else {
-        showToast(res.message, 'error');
-      }
-    }
-  };
+    var title = document.getElementById("title").value;
+    var author = document.getElementById("author").value;
+    var category = document.getElementById("category").value;
+    var status = document.getElementById("status").value;
 
-  xhr.onerror = function() { showToast('Network error. Please try again.', 'error'); };
-  xhr.send();
+    var table = document.getElementById("bookTable");
+
+    var row = table.insertRow();
+
+    row.insertCell(0).innerHTML = title;
+    row.insertCell(1).innerHTML = author;
+    row.insertCell(2).innerHTML = category;
+    row.insertCell(3).innerHTML = status;
+
+    row.insertCell(4).innerHTML =
+        "<button onclick='deleteBook(this)'>Delete</button>";
+
 }
 
-function renderTable(books) {
-  const tbody = document.getElementById('bookTableBody');
-  const count = document.getElementById('bookCount');
+function deleteBook(btn) {
 
-  count.textContent = books.length + ' record' + (books.length !== 1 ? 's' : '');
+    var row = btn.parentNode.parentNode;
+    row.remove();
 
-  if (books.length === 0) {
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="6">
-          <div class="empty-state">
-            <div class="icon">📭</div>
-            <p>No books found. Add your first book above!</p>
-          </div>
-        </td>
-      </tr>`;
-    return;
-  }
-
-  tbody.innerHTML = books.map((book, i) => `
-    <tr id="row-${book.id}">
-      <td style="color:var(--text-muted);">${i + 1}</td>
-      <td><strong>${escapeHtml(book.title)}</strong></td>
-      <td>${escapeHtml(book.author)}</td>
-      <td>${escapeHtml(book.category)}</td>
-      <td>
-        <span class="status ${book.availability}">
-          ${book.availability === 'available' ? '✅ Available' : '🔴 Borrowed'}
-        </span>
-      </td>
-      <td style="display:flex; gap:8px; flex-wrap:wrap;">
-        <button class="btn btn-warning btn-sm" onclick="loadEditForm(${book.id})">✏️ Edit</button>
-        <button class="btn btn-danger btn-sm"  onclick="confirmDelete(${book.id}, '${escapeHtml(book.title).replace(/'/g,"\\'")}')">🗑 Delete</button>
-      </td>
-    </tr>
-  `).join('');
 }
 
-function updateStats(books) {
-  document.getElementById('statTotal').textContent     = books.length;
-  document.getElementById('statAvailable').textContent = books.filter(b => b.availability === 'available').length;
-  document.getElementById('statBorrowed').textContent  = books.filter(b => b.availability === 'borrowed').length;
-}
-
-function submitForm() {
-  const id           = document.getElementById('bookId').value;
-  const title        = document.getElementById('title').value.trim();
-  const author       = document.getElementById('author').value.trim();
-  const category     = document.getElementById('category').value.trim();
-  const availability = document.getElementById('availability').value;
-
-  if (!title || !author || !category) {
-    showToast('Please fill in all required fields.', 'error');
-    return;
-  }
-
-  const isEdit = id !== '';
-  const action = isEdit ? 'update_book' : 'add_book';
-
-  const params = new URLSearchParams();
-  params.append('action', action);
-  params.append('title', title);
-  params.append('author', author);
-  params.append('category', category);
-  params.append('availability', availability);
-  if (isEdit) params.append('id', id);
-
-  document.getElementById('formSpinner').style.display = 'inline';
-  document.getElementById('submitBtn').disabled = true;
-
-  const xhr = new XMLHttpRequest();
-  xhr.open('POST', HANDLER, true);
-  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-  xhr.onload = function() {
-    document.getElementById('formSpinner').style.display = 'none';
-    document.getElementById('submitBtn').disabled = false;
-
-    if (xhr.status === 200) {
-      const res = JSON.parse(xhr.responseText);
-      if (res.success) {
-        showToast(res.message, 'success');
-        resetForm();
-        loadBooks();
-      } else {
-        showToast(res.message, 'error');
-      }
-    }
-  };
-
-  xhr.onerror = function() {
-    document.getElementById('formSpinner').style.display = 'none';
-    document.getElementById('submitBtn').disabled = false;
-    showToast('Network error. Please try again.', 'error');
-  };
-
-  xhr.send(params.toString());
-}
-function loadEditForm(id) {
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', `${HANDLER}?action=get_book&id=${id}`, true);
-
-  xhr.onload = function() {
-    if (xhr.status === 200) {
-      const res = JSON.parse(xhr.responseText);
-      if (res.success) {
-        const book = res.data;
-
-        document.getElementById('bookId').value       = book.id;
-        document.getElementById('title').value        = book.title;
-        document.getElementById('author').value       = book.author;
-        document.getElementById('category').value     = book.category;
-        document.getElementById('availability').value = book.availability;
-        document.getElementById('formTitle').textContent  = 'Edit Book';
-        document.getElementById('formBadge').textContent  = 'Edit';
-        document.getElementById('submitBtn').textContent  = '💾 Update Book';
-        document.getElementById('submitBtn').className    = 'btn btn-primary';
-        document.getElementById('cancelBtn').style.display = 'inline-flex';
-        document.getElementById('editIndicator').classList.add('show');
-        document.getElementById('formCard').classList.add('edit-mode');
-        document.getElementById('formCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
-      } else {
-        showToast(res.message, 'error');
-      }
-    }
-  };
-
-  xhr.send();
-}
-function confirmDelete(id, title) {
-  if (!confirm(`Are you sure you want to delete:\n"${title}"?\n\nThis action cannot be undone.`)) return;
-
-  const params = new URLSearchParams();
-  params.append('action', 'delete_book');
-  params.append('id', id);
-
-  const xhr = new XMLHttpRequest();
-  xhr.open('POST', HANDLER, true);
-  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-  xhr.onload = function() {
-    if (xhr.status === 200) {
-      const res = JSON.parse(xhr.responseText);
-      if (res.success) {
-        showToast(res.message, 'success');
-        // Remove row from DOM directly (no need to reload entire table)
-        const row = document.getElementById(`row-${id}`);
-        if (row) row.remove();
-        loadBooks(); // Reload to refresh stats and row numbers
-      } else {
-        showToast(res.message, 'error');
-      }
-    }
-  };
-
-  xhr.send(params.toString());
-}
-
-function resetForm() {
-  document.getElementById('bookId').value    = '';
-  document.getElementById('title').value     = '';
-  document.getElementById('author').value    = '';
-  document.getElementById('category').value  = '';
-  document.getElementById('availability').value = 'available';
-
-  document.getElementById('formTitle').textContent  = 'Add New Book';
-  document.getElementById('formBadge').textContent  = 'Add';
-  document.getElementById('submitBtn').textContent  = '➕ Add Book';
-  document.getElementById('submitBtn').className    = 'btn btn-success';
-  document.getElementById('cancelBtn').style.display = 'none';
-  document.getElementById('editIndicator').classList.remove('show');
-  document.getElementById('formCard').classList.remove('edit-mode');
-}
-
-function escapeHtml(str) {
-  const div = document.createElement('div');
-  div.appendChild(document.createTextNode(str));
-  return div.innerHTML;
-}
-
-window.onload = loadBooks;
 </script>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"d61ace1a7a5c47e3831d343de077b36a","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
